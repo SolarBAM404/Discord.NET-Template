@@ -19,6 +19,7 @@
 </p>
 
 My personal template for building Discord bots using the [Discord.NET](https://docs.discordnet.dev) library. It is designed to be scalable and production-ready, providing a solid foundation for your Discord applications.
+A lot of the code is inspired by this [Discord.NET template](https://github.com/zobweyt/Discord.Net.Template) created by [zobweyt](https://github.com/zobweyt)
 
 ## 📜 License
 
