@@ -1,12 +1,14 @@
 using System.Reflection;
 using Discord;
 using Discord.Interactions;
+using Discord.Rest;
 using DiscordNetTemplate.Assets;
 using DiscordNetTemplate.Common;
 using DiscordNetTemplate.Common.Options;
 using DiscordNetTemplate.Common.Results;
 using DiscordNetTemplate.Extensions.Builders;
 using Microsoft.Extensions.Options;
+using Emote = DiscordNetTemplate.Assets.Emote;
 
 namespace DiscordNetTemplate.Modules.SlashCommands;
 
@@ -26,11 +28,11 @@ public class GeneralCommands(IOptions<ReferenceOptions> options) : ModuleBase
     }
     
     [SlashCommand("about", "Shows information about the app.")]
-    public async Task<RuntimeResult> AboutAsync()
+    public async Task AboutAsync()
     {
-        var app = await Context.Client.GetApplicationInfoAsync();
+        RestApplication? app = await Context.Client.GetApplicationInfoAsync();
 
-        var embed = new EmbedBuilder()
+        Embed? embed = new EmbedBuilder()
             .WithTitle(app.Name)
             .WithDescription(app.Description)
             .AddField("Servers", Context.Client.Guilds.Count, true)
@@ -41,13 +43,12 @@ public class GeneralCommands(IOptions<ReferenceOptions> options) : ModuleBase
             .WithColor(Colours.Primary)
             .Build();
 
-        var components = new ComponentBuilder()
-            .AddButtonLink("Support", Emojis.BrandLogos.Discord, options.Value.SupportServerUrl)
-            .AddButtonLink("Source", Emojis.BrandLogos.GitHub, options.Value.SourceRepositoryUrl)
+        MessageComponent? components = new ComponentBuilder()
+            .WithButton("Support", style: ButtonStyle.Link, emote: Emote.BrandLogos.Discord, url: options.Value.SupportServerUrl)
+            .WithButton("Source", style: ButtonStyle.Link, emote: Emote.BrandLogos.GitHub, url: options.Value.SourceRepositoryUrl)
             .Build();
 
         await RespondAsync(embed: embed, components: components);
-        return InteractionResult.Success();
     }
     
 }
