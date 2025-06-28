@@ -5,21 +5,14 @@ namespace DiscordNetTemplate.Extensions.Builders;
 public static class ComponentBuilderExtensions
 {
     
-    public static ComponentBuilder AddButtonLink(
-        this ComponentBuilder builderExtensions, 
-        string label, 
-        string url, 
-        Emote emote,
-        ButtonStyle style = ButtonStyle.Link)
+    public static ComponentBuilder WithLink(this ComponentBuilder builder, string label, Emote emote, string url)
     {
-        ButtonBuilder button = new ButtonBuilder()
+        ButtonBuilder? button = new ButtonBuilder()
             .WithLabel(label)
-            .WithStyle(ButtonStyle.Link)
             .WithUrl(url)
+            .WithStyle(ButtonStyle.Link)
             .WithEmote(emote);
-;
-        return builderExtensions.WithButton(button);
-
+        return builder.WithButton(button);
     }
     
 }
