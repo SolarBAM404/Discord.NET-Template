@@ -1,7 +1,9 @@
 using Discord.Addons.Hosting;
 using DiscordNetTemplate.Common.Options;
 using DiscordNetTemplate.Extensions;
+using DiscordNetTemplate.Services;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
@@ -43,7 +45,7 @@ builder.Services.AddInteractiveService(config =>
     config.DefaultTimeout = TimeSpan.FromMinutes(5);
     config.ProcessSinglePagePaginators = true;
 });
-
+builder.Services.AddHostedService<InteractionHandler>();
 
 IHost host = builder.Build();
 await host.RunAsync();
