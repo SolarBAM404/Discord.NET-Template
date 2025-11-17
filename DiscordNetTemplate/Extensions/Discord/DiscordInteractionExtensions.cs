@@ -16,8 +16,8 @@ public static class DiscordInteractionExtensions
         /// <returns>A task representing the asynchronous operation.</returns>
         public static async Task HandleWithResultAsync(this IDiscordInteraction interaction, IResult result)
         {
-            var embed = new EmbedBuilder()
-                .WithStyle(result.IsSuccess ? new SuccessEmbedBase() : new ErrorEmbedBase())
+            Embed? embed = new EmbedBuilder()
+                .WithStyle(result.IsSuccess ? SuccessEmbedBase.Instance : ErrorEmbedBase.Instance)
                 .WithDescription(result.ErrorReason)
                 .Build();
 
